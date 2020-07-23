@@ -35,6 +35,23 @@ services:
     networks:
       - network-frontend
 
+  react-client:
+    image: node:13.7.0
+    # stdin_open: True
+    # build:
+    #   dockerfile: Dockerfile.dev
+    #   context: ./react-client
+    command: ["/src/react-client/docker_build.sh"]
+    volumes: 
+      - .:/src
+      - node_modules:/src/react-client/node_modules
+    ports: 
+      - 3010:3010
+    depends_on: 
+      - backend
+    networks: 
+      - network-frontend
+  
   postgres:
     image: postgres:12.0-alpine
     volumes:
