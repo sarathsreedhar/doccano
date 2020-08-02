@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useContext} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +14,10 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Switch from "@material-ui/core/Switch";
+
+
+import { ThemeModeContext } from "../../../providers/ThemeModeProvider";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -84,6 +88,7 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+  const { isDarkMode, toggleThemeMode } = useContext(ThemeModeContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -115,6 +120,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
@@ -131,6 +137,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+       
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
@@ -190,6 +197,12 @@ export default function PrimarySearchAppBar() {
             />
           </div>
           <div className={classes.grow} />
+          <Switch
+            checked={isDarkMode}
+            onChange={() => toggleThemeMode()}
+            name="checkedA"
+            inputProps={{ "aria-label": "secondary checkbox" }}
+          />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
